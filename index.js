@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
 const db = mongoose.connection
@@ -14,7 +15,7 @@ db.once('open', () => console.log('Connected to Database'))
 
 app.use(express.json())
 app.use(cookieParser());
-
+app.use(bodyParser.json());
 app.use(morgan('dev'))
 app.use(cors({ origin: true, credentials: true}))
 
