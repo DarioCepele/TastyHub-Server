@@ -18,7 +18,7 @@ app.use(morgan("dev"));
 app.use(cors({ origin: true, credentials: true }));
 
 const usersRouter = require("./routes/users");
-app.use("/users", usersRouter);
+app.use("/", usersRouter);
 
 const port = process.env.PORT || 8080;
 
