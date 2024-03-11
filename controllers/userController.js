@@ -37,11 +37,6 @@ exports.login = async (req, res, next) => {
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ userId: user._id }, process.env.JWT, { expiresIn: "1h" });
-      res.cookie("access-token", accessToken, {
-        maxAge: 60 * 60 * 24 * 30 * 1000, //30 days
-        secure: false,
-        httpOnly: false,
-      });
       res.json({ token, message: "Accesso effettuato con successo" });
     } else {
       res.status(401).json({ error: "Credenziali non valide" });
