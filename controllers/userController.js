@@ -35,16 +35,19 @@ exports.login = async (req, res, next) => {
     // Trova l'utente nel database per l'email fornita
     const user = await User.findOne({ email });
 
-    if (user && await bcrypt.compare(password, user.password)) {
-    
-      const token = jwt.sign({ userId: user._id }, process.env.JWT , { expiresIn: '1h' });
-      
-      res.json({ token, message: 'Accesso effettuato con successo' });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const token = jwt.sign({ userId: user._id }, process.env.JWT, { expiresIn: "1h" });
+      res.cookie("access-token", accessToken, {
+        maxAge: 60 * 60 * 24 * 30 * 1000, //30 days
+        secure: false,
+        httpOnly: false,
+      });
+      res.json({ token, message: "Accesso effettuato con successo" });
     } else {
-      res.status(401).json({ error: 'Credenziali non valide' });
+      res.status(401).json({ error: "Credenziali non valide" });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Impossibile effettuare l\'accesso' });
+    res.status(500).json({ error: "Impossibile effettuare l'accesso" });
   }
 };
 
