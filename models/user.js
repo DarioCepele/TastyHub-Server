@@ -15,9 +15,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    recipe: [
+    recipes: [
       {
-        type: String,
+        id: {
+          type: String,
+        },
+        title: {
+          type: String,
+        },
+        image: {
+          type: String,
+        },
       },
     ],
   },
