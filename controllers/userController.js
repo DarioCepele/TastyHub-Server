@@ -37,7 +37,7 @@ exports.login = async (req, res, next) => {
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ userId: user._id }, process.env.JWT, { expiresIn: "1h" });
-      res.json({ token, message: "Accesso effettuato con successo" });
+      res.status(200).json({ token, message: "Accesso effettuato con successo" });
     } else {
       res.status(401).json({ error: "Credenziali non valide" });
     }
