@@ -24,7 +24,7 @@ exports.createUser = async (req, res) => {
 
     const token = createToken(newUser._id);
 
-    res.status(201).json({ message: "Utente registrato con successo", token: token });
+    res.status(201).json({ message: "Utente registrato con successo"});
   } catch (error) {
     res.status(500).json({ error: 'Impossibile completare la registrazione' });
   }
