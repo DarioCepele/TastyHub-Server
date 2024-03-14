@@ -22,7 +22,9 @@ exports.createUser = async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: 'Utente registrato con successo' });
+    const token = createToken(newUser._id);
+
+    res.status(201).json({ message: "Utente registrato con successo", token: token });
   } catch (error) {
     res.status(500).json({ error: 'Impossibile completare la registrazione' });
   }
