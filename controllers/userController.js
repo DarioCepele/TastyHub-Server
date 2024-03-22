@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authenticateLogin = require("../middlewares/authenticateLogin");
 
 const User = require("../models/user");
 
@@ -27,18 +28,11 @@ exports.createUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    // Il middleware authenticateLogin ha già verificato le credenziali, quindi qui possiamo utilizzare il token generato
+    const token = res.locals.token;
 
-    // Trova l'utente nel database per l'email fornita
-    const user = await User.findOne({ email });
-
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const token = createToken(user._id);
-
-      res.json({ token, message: "Accesso effettuato con successo" });
-    } else {
-      res.status(401).json({ error: "Credenziali non valide" });
-    }
+    // Invia il token JWT come parte della risposta
+    res.json({ token, message: "Accesso effettuato con successo" });
   } catch (error) {
     res.status(500).json({ error: "Impossibile effettuare l'accesso" });
   }
