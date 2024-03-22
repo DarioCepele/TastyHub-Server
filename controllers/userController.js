@@ -7,15 +7,6 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.JWT, { expiresIn: "1h" });
 };
 
-exports.getUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-
 exports.createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
