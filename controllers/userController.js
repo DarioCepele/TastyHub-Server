@@ -34,7 +34,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -42,7 +42,8 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign({ userId: user._id }, process.env.JWT, { expiresIn: "1h" });
+      const token = createToken(user._id);
+
       res.json({ token, message: "Accesso effettuato con successo" });
     } else {
       res.status(401).json({ error: "Credenziali non valide" });
