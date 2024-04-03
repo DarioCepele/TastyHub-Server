@@ -7,19 +7,25 @@ const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-mongoose.connect(process.env.DATABASE_URL);
+// Connect to MongoDB database using the URL from environment variables
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
-db.on("error", (error) => console.error(error));
-db.once("open", () => console.log("Connected to Database"));
+db.on("error", (error) => console.error(error)); // Log database connection errors
+db.once("open", () => console.log("Connected to Database")); // Log successful database connection
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(morgan("dev"));
-app.use(cors({ origin: true, credentials: true }));
+// Middleware setup
+app.use(express.json()); // Parse incoming JSON requests
+app.use(cookieParser()); // Parse cookies
 
-const usersRouter = require("./routes/users");
-app.use("/users", usersRouter);
+app.use(morgan("dev")); // Log HTTP requests to the console in development mode
+app.use(cors({ origin: true, credentials: true })); // Enable CORS with options for all origins and credentials
 
+// Define routes
+const usersRouter = require("./routes/users"); // Import user routes
+app.use("/users", usersRouter); // Mount user routes at /users endpoint
+
+// Set port for the server to listen on, defaulting to 8080 if not provided
 const port = process.env.PORT || 8080;
 
+// Start the server and listen on specified port
 const server = app.listen(port, () => console.log("Server Started on " + port));
