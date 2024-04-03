@@ -1,5 +1,7 @@
+// Importing mongoose library
 const mongoose = require("mongoose");
 
+// Defining the schema for the user model
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -15,20 +17,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // Array of recipes belonging to the user
     recipes: [
       {
-        id: {
+        recipeId: {
           type: String,
         },
-        title: {
+        recipeTitle: {
           type: String,
         },
-        image: {
+        recipeImage: {
           type: String,
         },
       },
     ],
   },
+  // Including timestamps for when the user document was created and updated
   { timestamps: true }
 );
 
