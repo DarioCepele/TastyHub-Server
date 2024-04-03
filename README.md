@@ -1,32 +1,54 @@
-# TastyHub
+# TastyHub - server
 
-[![NPM Version][npm-image]][npm-url]
+## Description
+This server handles requests related to users and their favorite recipes.
 
-TastyHub: Your go-to culinary haven! With a seamless React front-end and robust Node.js and MongoDB back-end, TastyHub offers a diverse collection of recipes, cooking tips, and a vibrant food community. Join us for a delightful culinary adventure!
+## Prerequisites
+- Node.js installed
+- MongoDB installed and running
+- Environment variables configured (see .env.example)
 
-## Test my app
+## Installation
+1. Clone this repository
+2. Run `npm install` to install dependencies
+3. Create a `.env` file and configure environment variables as in the `.env.example` file
 
-where you want :smiley:
+## Configuration
+Ensure MongoDB is running and environment variables are configured correctly.
 
-```sh
- https://client-mu-umber.vercel.app/login
-```
+## Starting the Server
+Run `npm start` to start the server. The server will listen on the port specified in the environment variables.
 
-## Usage example
+## API Endpoints
+### GET /api/users
+- Description: Get all users registered in the system
+- Parameters: None
+- Authentication: Not required
 
-Why use TastyHub?
+### POST /api/users/register
+- Description: Register a new user in the system
+- Parameters: name (user's name), email (user's email), password (user's password)
+- Authentication: Not required
 
-- Easy
-- Cool
-- Nice to use
+### POST /api/users/login
+- Description: Log in an existing user
+- Parameters: email (user's email), password (user's password)
+- Authentication: Not required
 
-What you want more?
+### POST /api/users/:email/recipes
+- Description: Add a new recipe to a user's favorites
+- Parameters: recipeId (ID of the recipe), recipeTitle (title of the recipe), recipeImage (image of the recipe)
+- Authentication: Required (JWT Token)
 
-## Meta
+### GET /api/users/:email/favorites
+- Description: Get all favorite recipes of a user
+- Parameters: email (user's email)
+- Authentication: Required (JWT Token)
 
-Dario Cepele – [@Portfolio](https://dariocepele.github.io/) – dario.cepele3@gmail.com
+### DELETE /api/users/:email/favorites/:recipeId
+- Description: Remove a recipe from a user's favorites
+- Parameters: email (user's email), recipeId (ID of the recipe)
+- Authentication: Required (JWT Token)
 
-<!-- Markdown link & img dfn's -->
-
-[npm-image]: https://img.shields.io/npm/v/npm
-[npm-url]: https://npmjs.org/package/datadog-metrics
+## Authors
+- [Dario Cepele]
