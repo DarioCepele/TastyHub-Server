@@ -6,7 +6,6 @@ const RecipeController = require("../controllers/recipeController");
 const verifyToken = require("../middlewares/verifyToken");
 
 // Defining routes
-router.get("/", UserController.getUsers); // Handling GET requests to the root route, calls the getUsers function from userController
 router.post("/register", UserController.createUser); // Handling POST requests to the /register route, calls the createUser function from userController
 router.post("/login", UserController.login); // Handling POST requests to the /login route, calls the login function from userController
 router.post("/:email/recipes", verifyToken, RecipeController.addRecipe); // Handling POST requests to the /:email/recipes route with token verification, calls the addRecipe function from recipeController
